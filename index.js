@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const helmet = require("helmet")
-const compression = require(" compression")
+const compression = require("compression")
 const mongoose = require("mongoose")
 const paymentRoute = require("./routes/payment");
 if (process.env.NODE_ENV !== "production") {
