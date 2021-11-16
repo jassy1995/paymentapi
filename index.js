@@ -3,7 +3,9 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose")
 const paymentRoute = require("./routes/payment");
-require("dotenv").config()
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const PORT = process.env.PORT || 3899;
 
 const db = process.env.OffLineMongoURI;
