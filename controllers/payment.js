@@ -1,6 +1,6 @@
 const axios = require("axios");
 const User = require("../model/user");
-const { formatCurrency } = require("../script/currency")
+const account = require('accounting');
 let myFunc;
 let amount;
 
@@ -36,7 +36,7 @@ exports.PayMe = async (req, res, next) => {
           });
         }
       } catch (error) {
-        return res.status(500).json("error occur, please try again");
+        return res.status(500).json("error occur, please try again ⚠️");
       }
     } else if (Number(response) === 2 && initUser.stage===2) {
      let updatedUser2 = await User.findOne({ phone: phoneNumber});
@@ -65,11 +65,11 @@ exports.PayMe = async (req, res, next) => {
             updatedUser3.stage = 3;
             updatedUser3.save();
             return res.status(200).json({
-              message: `Kindly make a payment of ${formatCurrency(result.data.data.amount)} to the account below 👇 \n *account No*  ${result.data.data.account_number} \n *bank*  ${result.data.data.bank_name} \n \n kindly enter \n *[1]* to confirm your payment`,
+              message: `Kindly make a payment of ${account.formatMoney(result.data.data.amount)} to the account below 👇 \n *account No*  ${result.data.data.account_number} \n *bank*  ${result.data.data.bank_name} \n \n kindly enter \n *[1]* to confirm your payment`,
             });
           }
         } catch (error) {
-          return res.status(500).json({ message: "error occur,please try again" });
+          return res.status(500).json({ message: "error occur,please try again ⚠️" });
         }
       };
       myFunc = generateAccountDetail;
@@ -92,7 +92,7 @@ exports.PayMe = async (req, res, next) => {
           updatedUser4.save();
           return res
             .status(200)
-            .json({ message: "Thank you, we have received your payment" });
+            .json({ message: "Thank you, we have received your payment 😃" });
         } else if (!verify_payment.data.status) {
           myFunc();
           return res
@@ -100,15 +100,15 @@ exports.PayMe = async (req, res, next) => {
             .json({ message: "We have not received your payment,try again" });
         }
       } catch (error) {
-        return res.status(500).json({ message: "error occur,please try again" });
+        return res.status(500).json({ message: "error occur,please try again ⚠️" });
       }
     } 
     else {
-      return res.json({message:"invalid value,kindly enter correct one"});
+      return res.json({message:"invalid value,kindly enter correct one ⚠️"});
     }
   } else {
     return res
       .status(500)
-      .json({ message: "both field must not be empty,please fill" });
+      .json({ message: "both field must not be empty,please fill ⚠️" });
   }
 };
