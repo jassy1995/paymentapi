@@ -1,5 +1,6 @@
 const axios = require("axios");
-const User = require("../model/user")
+const User = require("../model/user");
+const { formatCurrency } = require("../script/currency")
 let myFunc;
 let amount;
 
@@ -31,7 +32,7 @@ exports.PayMe = async (req, res, next) => {
           checkUser.stage=2;
           checkUser.save(); 
           return res.status(200).json({
-            message: `Welcome! This service allows to fulfil a payment to a merchant. \n We have found  payment request for you. \n *amount* ${data.data.order[0].amount} \n *merchant* ${data.data.order[0].merchant_name} \n *desc* ${data.data.order[0].description} \n *picture* ${data.data.order[0].picture} \n  \n kindly enter  *[1]* To Make Payment \n *[2]* To Decline`,
+            message: `Welcome 😃! This service allows to fulfil a payment to a merchant. \n We have found  payment request for you. \n *amount* ${data.data.order[0].amount} \n *merchant* ${data.data.order[0].merchant_name} \n *desc* ${data.data.order[0].description} \n *picture* ${data.data.order[0].picture} \n  \n kindly enter 👇 \n *[1]* To Make Payment \n *[2]* To Decline`,
           });
         }
       } catch (error) {
@@ -44,7 +45,7 @@ exports.PayMe = async (req, res, next) => {
      updatedUser2.save();
       return res
         .status(200)
-        .json({ message: "Your request has rejected successfully" });
+        .json({ message: "Your request has rejected successfully ❌"});
     } 
     
     else if (Number(response) === 1 && initUser.stage===2) {
@@ -64,7 +65,7 @@ exports.PayMe = async (req, res, next) => {
             updatedUser3.stage = 3;
             updatedUser3.save();
             return res.status(200).json({
-              message: `Kindly make a payment of ${result.data.data.amount} to the account below 👇 \n *account No*  ${result.data.data.account_number} \n *bank*  ${result.data.data.bank_name} \n \n kindly enter *[1]* to confirm your payment`,
+              message: `Kindly make a payment of ${formatCurrency(result.data.data.amount)} to the account below 👇 \n *account No*  ${result.data.data.account_number} \n *bank*  ${result.data.data.bank_name} \n \n kindly enter \n *[1]* to confirm your payment`,
             });
           }
         } catch (error) {
