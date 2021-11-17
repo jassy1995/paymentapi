@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   phone: { type: String, required: true },
   stage: { type: Number, required: true },
+  qty:{ type: Number, required: true}
   
 });
 
