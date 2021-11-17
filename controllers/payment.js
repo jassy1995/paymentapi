@@ -32,7 +32,7 @@ exports.PayMe = async (req, res, next) => {
           checkUser.stage=2;
           checkUser.save(); 
           return res.status(200).json({
-            message: `Welcome 😃! This service allows to fulfil a payment to a merchant. \n We have found  payment request for you. \n *amount* ${data.data.order[0].amount} \n *merchant* ${data.data.order[0].merchant_name} \n *desc* ${data.data.order[0].description} \n *picture* ${data.data.order[0].picture} \n  \n kindly enter 👇 \n *[1]* To Make Payment \n *[2]* To Decline`,
+            message: `Welcome 😃! This service allows to fulfil a payment to a merchant. \n We have found  payment request for you. \n *amount* ${account.formatMoney(data.data.order[0].amount)} \n *merchant* ${data.data.order[0].merchant_name} \n *desc* ${data.data.order[0].description} \n *picture* ${data.data.order[0].picture} \n  \n kindly enter 👇 \n *[1]* To Make Payment \n *[2]* To Decline`,
           });
         }
       } catch (error) {
