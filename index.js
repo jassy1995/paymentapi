@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const helmet = require("helmet")
-const compression = require("compression")
-const mongoose = require("mongoose")
+const helmet = require("helmet");
+const compression = require("compression");
+const mongoose = require("mongoose");
 const paymentRoute = require("./routes/payment");
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -11,8 +11,9 @@ if (process.env.NODE_ENV !== "production") {
 const PORT = process.env.PORT || 3899;
 
 const db = process.env.mongoURI;
+mongoose.Promise = global.Promise;
 mongoose
-  .connect(db, { 
+  .connect(db, {
     useFindAndModify: false,
     useUnifiedTopology: true,
     useNewUrlParser: true,
@@ -21,8 +22,7 @@ mongoose
     replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
   })
   .then(() => console.log("MongoDB successfully connected"))
-  .catch((err) => console.log(err));
-
+  .catch((err) => console.log(`Database couldn't be connected to: ${err}`));
 
 app.use(helmet());
 app.use(compression());
@@ -31,14 +31,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/payment", paymentRoute);
 
-app.route('/')
-  .get(function (req, res) {
-    res.sendFile(process.cwd() + '/index.html');
+app.route("/").get(function (req, res) {
+  res.sendFile(process.cwd() + "/index.html");
 });
-
-
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
-
