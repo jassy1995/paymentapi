@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 const PORT = process.env.PORT || 3899;
-
+//database connection
 const db = process.env.mongoURI;
 mongoose.Promise = global.Promise;
 mongoose
@@ -24,17 +24,22 @@ mongoose
   .then(() => console.log("MongoDB successfully connected"))
   .catch((err) => console.log(`Database couldn't be connected to: ${err}`));
 
+//for security during deployment
 app.use(helmet());
 app.use(compression());
+//solve cors problem
 app.use(cors());
+//allow request from frontend
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+//route
 app.use("/payment", paymentRoute);
-
+//initial page
 app.route("/").get(function (req, res) {
   res.sendFile(process.cwd() + "/index.html");
 });
 
+//serving the application
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
