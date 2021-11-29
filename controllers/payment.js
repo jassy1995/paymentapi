@@ -158,8 +158,8 @@ exports.PayMe = async (req, res, next) => {
             merchant_name: getUserInfo.merchant_name,
             amount: getUserInfo.amount,
             narration: "PES 2021",
-            // transaction_reference: getUserInfo.payment_key,
-            transaction_reference: "CC_kESfRVAdZyWc3qiTnmFxPYUBX8hK7tG4",
+            transaction_reference: getUserInfo.payment_key,
+            // transaction_reference: "CC_kESfRVAdZyWc3qiTnmFxPYUBX8hK7tG4",
           }
         );
         if (verify_payment.data.status) {
